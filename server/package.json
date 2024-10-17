@@ -1,0 +1,24 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "todo app backend services",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/minhazurrony/todo-app.git"
+  },
+  "keywords": [
+    "todo-app",
+    "todo-react",
+    "node-express"
+  ],
+  "author": "Minhazur Rahman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/minhazurrony/todo-app/issues"
+  },
+  "homepage": "https://github.com/minhazurrony/todo-app#readme"
+}
