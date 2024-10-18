@@ -4,6 +4,9 @@
   "description": "todo app backend services",
   "main": "app.ts",
   "scripts": {
+    "db:generate": "npx drizzle-kit generate",
+    "db:migrate": "npx drizzle-kit migrate",
+    "db:studio": "npx drizzle-kit studio",
     "dev": "nodemon src/app.ts"
   },
   "repository": {
@@ -23,10 +26,14 @@
   "homepage": "https://github.com/minhazurrony/todo-app#readme",
   "dependencies": {
     "dotenv": "^16.4.5",
-    "express": "^4.21.1"
+    "drizzle-orm": "^0.35.2",
+    "express": "^4.21.1",
+    "pg": "^8.13.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
+    "@types/pg": "^8.11.10",
+    "drizzle-kit": "^0.26.2",
     "nodemon": "^3.1.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3"
