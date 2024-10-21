@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import { db } from "../db";
 import "dotenv/config";
 import { usersTable } from "../db/schema";
@@ -13,33 +12,45 @@ export const registerController = async (
 
   // Check for required fields
   if (!username || !password || !name || !email) {
-    res.status(400).json({ error: "All fields are required" });
+    res
+      .status(400)
+      .json({ error: "name, email, username & password fields are required" });
   }
 
-  // Check if user already exists in db
-  const existingUser = await db.query.usersTable.findFirst({
-    where: (users, { eq }) => eq(users.email, email),
-  });
-
-  if (existingUser) {
-    res.status(400).json({ error: "User already exists" });
-  } else {
-    // You might want to hash the password and save the user
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Assuming you have a method to create a user
-    const newUser = await db.insert(usersTable).values({
-      username,
-      password: hashedPassword,
-      name,
-      email,
+  try {
+    // Check if user already exists in db
+    const existingUser = await db.query.usersTable.findFirst({
+      where: (users, { eq }) => eq(users.email, email),
     });
 
-    // Optionally generate a token for the new user
-    const token = jwt.sign({ id: newUser.oid }, process.env.JWT_SECRET as any, {
-      expiresIn: "1h",
-    });
+    if (existingUser) {
+      res.status(400).json({ error: "User already exists" });
+    } else {
+      // You might want to hash the password and save the user
+      const hashedPassword = await bcrypt.hash(password, 10);
 
-    res.status(201).json({ message: "User registered successfully", token });
+      // Assuming you have a method to create a user
+      const newUser = await db
+        .insert(usersTable)
+        .values({
+          username,
+          password: hashedPassword,
+          name,
+          email,
+        })
+        .returning({
+          id: usersTable.id,
+          name: usersTable.name,
+          email: usersTable.email,
+          username: usersTable.username,
+        });
+
+      res
+        .status(201)
+        .json({ message: "User registered successfully", user: newUser });
+    }
+  } catch (error) {
+    console.error("Error during register:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
