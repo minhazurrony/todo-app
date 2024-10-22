@@ -1,5 +1,5 @@
 import express from "express";
-import "dotenv/config";
+import "dotenv";
 import { loginController, registerController } from "./controller";
 
 const app = express();
