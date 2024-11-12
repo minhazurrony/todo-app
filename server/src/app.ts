@@ -1,6 +1,6 @@
 import express from "express";
 import "dotenv";
-import { login, register, addTodo } from "./controller";
+import { login, register, addTodo, todos } from "./controller";
 import { verifyToken } from "./middleware";
 import cookieParser from "cookie-parser";
 
@@ -17,6 +17,7 @@ app.post("/api/auth/register", register);
 app.post("/api/auth/login", login);
 
 app.post("/api/add-todo", verifyToken, addTodo);
+app.get("/api/todos", verifyToken, todos);
 
 app.listen(port, () => {
   console.log(`todo-app listening on port ${port}`);
