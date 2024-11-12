@@ -4,10 +4,7 @@ import { db } from "../db";
 import "dotenv/config";
 import { usersTable } from "../db/schema";
 
-export const registerController = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const register = async (req: Request, res: Response): Promise<void> => {
   const { username, password, name, email } = req.body;
 
   // Check for required fields

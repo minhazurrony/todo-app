@@ -1,6 +1,6 @@
 import express from "express";
 import "dotenv";
-import { loginController, registerController } from "./controller";
+import { login, register, addTodo } from "./controller";
 import { verifyToken } from "./middleware";
 import cookieParser from "cookie-parser";
 
@@ -13,12 +13,10 @@ app.use(express.json());
 // Middleware for parsing cookie
 app.use(cookieParser());
 
-app.post("/api/auth/register", registerController);
-app.post("/api/auth/login", loginController);
+app.post("/api/auth/register", register);
+app.post("/api/auth/login", login);
 
-app.get("/api/users", verifyToken, (req, res) => {
-  res.send(200);
-});
+app.post("/api/add-todo", verifyToken, addTodo);
 
 app.listen(port, () => {
   console.log(`todo-app listening on port ${port}`);

@@ -3,10 +3,7 @@ import { db } from "../db";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-export const loginController = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const login = async (req: Request, res: Response): Promise<void> => {
   const { username, password } = req.body;
 
   // Check for required fields
